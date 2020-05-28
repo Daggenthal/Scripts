@@ -2,41 +2,41 @@
 #Author:	ColdZero (Global for Homecoming: @Naudilus)
 #Started:	3/20/2020 at 22:34	
 #Finished:	3/21/2020 at 02:09
-#Edited:	5/22/2020 at 16:01 (Added messages about disabling iGPU for Ubuntu 20.04, and Pop_OS 20.04, to fix desktop crashes.)
+#Edited:	5/28/2020 at 05:43 (Sectioned some code off into its own parts and changed a varaibles name, and added some commas)
 
 {
-codename=$(lsb_release -c)	# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros
+ubuntu=$(lsb_release -c)		# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros
 fedora=$(cat /etc/fedora-release)	# This does the same thing as codename, but for Fedora.
-manjaro=$(lsb_release -d)	# I lied. Apparently Manjaro has this included as well.
-
-printf "%s\n" "$codename"	# Prints out which codename it grabbed. Entirely useless, only for debugging.
-printf "%s\n" "$fedora"	# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
-} &> /dev/null # This hides the nasty "command not found..." errors for this block of code.
+manjaro=$(lsb_release -d)		# I lied. Apparently Manjaro has this included as well.
+} &> /dev/null
 
 {
-printf "Now installing Wine and Lutris.\n"
+printf "%s\n" "$ubuntu"	# Prints out which codename it grabbed. Entirely useless, only for debugging.
+printf "%s\n" "$fedora"	# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
+} 2>&1				# This hides the nasty "command not found..." errors for this block of code.
+
+{
 printf "Thank you for downloading my script. If you have any issues, please let me know on the forums.\n\n"
-printf "This may take up to a minute or two, depending on your Internet speed, to complete...\n"
 }
 
 {
-if [ "$codename" == "Codename:	eoan" ]; # Lines 14, 18, 22, 26, 30, 33, and 36 just check what was printed out by the variables and continue execution. (Expanded on below)
+if [ "$ubuntu" == "Codename:	eoan" ]; # Lines 14, 18, 22, 26, 30, 33, and 36 just check what was printed out by the variables and continue execution. (Expanded on below)
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ eoan main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$codename" == "Codename:	focal" ]; #Ubuntu 20.04 LTS 
+elif [ "$ubuntu" == "Codename:	focal" ]; #Ubuntu 20.04 LTS 
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ eoan main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$codename" == "Codename:	bionic" ];
+elif [ "$ubuntu" == "Codename:	bionic" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$codename" == "Codename:	tricia" ] || [ "$codename" == "Codename:	tina" ] || [ "$codename" == "Codename:	tessa" ];
+elif [ "$ubuntu" == "Codename:	tricia" ] || [ "$ubuntu" == "Codename:	tina" ] || [ "$ubuntu" == "Codename:	tessa" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add - && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' -y && sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport -y && sudo apt-get update && wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -    && echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04 ./" | sudo tee /etc/apt/sources.list.d/wine-obs.list && sudo apt update && sudo apt install --install-recommends winehq-stable -y
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$codename" == "Codename:	xenial" ] || [ "$codename" == "Codename:	sarah" ] || [ "$codename" == "Codename:	serena" ] || [ "$codename" == "Codename:	sonya" ] || [ "$codename" == "Codename:	sylvia" ];
+elif [ "$ubuntu" == "Codename:	xenial" ] || [ "$ubuntu" == "Codename:	sarah" ] || [ "$ubuntu" == "Codename:	serena" ] || [ "$ubuntu" == "Codename:	sonya" ] || [ "$ubuntu" == "Codename:	sylvia" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
@@ -61,9 +61,9 @@ clear
 
 {
 printf "The installation is now complete.\n\n" # These are all self explanatory. They just print out a message to the terminal.
-printf "If you are using Ubuntu 16.04 or Linux Mint 18.x, please ignore the GLib message if it shows up.\n\n"
+printf "If you are using Ubuntu 16.04, or Linux Mint 18.x, please ignore the GLib message if it shows up.\n\n"
 printf "This script was created by ColdZero on the Homecoming Forums.\n\n"
-printf "If you have an iGPU (integrated graphics, specifically Intel), and your desktop crashes while using Ubuntu 20.04 or any variant (i.e. Pop_OS 20.04), turn off your iGPU in the BIOS. I was having the same issues, and this improved both my FPS and solved my issues of crashing to where I had to login again.\n"
+printf "If you have an iGPU (integrated graphics, specifically Intel), and your desktop crashes while using Ubuntu 20.04 or any variant (i.e. Pop_OS 20.04), turn off your iGPU in the BIOS. I was having the same issues, and this improved my FPS while also solving my issues of crashing to where I had to login again.\n"
 printf "Now showing the current verions of Wine and Lutris installed.\n\n"
 }
 
@@ -89,7 +89,7 @@ done
 }
 
 
-# 											This is just more in-depth information as to what it does.
+# 								This is just more in-depth information as to what it does.
 
 
 # If you are reading this, hello! If you have any issues with this script that I made, or you if want to leave some feedback, please post it on the forum!
