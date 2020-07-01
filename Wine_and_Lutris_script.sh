@@ -11,7 +11,7 @@ manjaro=$(lsb_release -d)			# I lied. Apparently Manjaro has this included as we
 linuxMint=$(lsb_release -d)			# I kept getting an error with lsb_release -c, being this: line XX: [: missing `]'. I couldn't fully figure it out, even though it's telling me DIRECTLY what it's missing, so instead I just created a workaround, which is too vague but it still works for now.
 printf "%s\n" "$codename"			# Prints out which codename it grabbed. Entirely useless, only for debugging.
 printf "%s\n" "$fedora"				# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
-} &> /dev/null 					# This hides the nasty "command not found..." errors for this block of code.
+} &> /dev/null 						# This hides the nasty "command not found..." errors for this block of code.
 
 {
 printf "Now installing Wine and Lutris.\n"
