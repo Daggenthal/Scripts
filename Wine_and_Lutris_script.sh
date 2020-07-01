@@ -2,16 +2,16 @@
 #Author:	ColdZero (Global for Homecoming: @Naudilus)
 #Started:	3/20/2020 at 22:34	
 #Finished:	3/21/2020 at 02:09
-#Edited:	7/01/2020 at 05:02 (Added support for Linux Mint 20.04)
+#Edited:	7/01/2020 at 05:28 (Added support for Linux Mint 20.04)
 
 {
-codename=$(lsb_release -c)			# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros
-fedora=$(cat /etc/fedora-release)	# This does the same thing as codename, but for Fedora.
-manjaro=$(lsb_release -d)			# I lied. Apparently Manjaro has this included as well.
-linuxMint=$(lsb_release -d)			# I kept getting an error with lsb_release -c, being this: line XX: [: missing `]'. I couldn't fully figure it out, even though it's telling me DIRECTLY what it's missing, so instead I just created a workaround, which is too vague but it still works for now.
-printf "%s\n" "$codename"			# Prints out which codename it grabbed. Entirely useless, only for debugging.
-printf "%s\n" "$fedora"				# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
-} &> /dev/null 						# This hides the nasty "command not found..." errors for this block of code.
+codename=$(lsb_release -c)							# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros
+fedora=$(cat /etc/fedora-release)					# This does the same thing as codename, but for Fedora.
+manjaro=$(lsb_release -d)							# I lied. Apparently Manjaro has this included as well.
+linuxMint=$(awk "NR==11" /etc/os-release)			# I kept getting an error with lsb_release -c, being this: line XX: [: missing `]'. I couldn't fully figure it out, even though it's telling me DIRECTLY what it's missing, so instead I just created a workaround, which is too vague but it still works for now.
+printf "%s\n" "$codename"							# Prints out which codename it grabbed. Entirely useless, only for debugging.
+printf "%s\n" "$fedora"								# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
+} &> /dev/null 										# This hides the nasty "command not found..." errors for this block of code.
 
 {
 printf "Now installing Wine and Lutris.\n"
@@ -28,7 +28,7 @@ elif [ "$codename" == "Codename:	focal" ]; #Ubuntu 20.04 LTS and Linux Mint 20.0
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$linuxMint" == "Description:	Linux Mint 20" ];
+elif [ "$linuxMint" == "VERSION_CODENAME=ulyana" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
