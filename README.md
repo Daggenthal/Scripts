@@ -1,7 +1,6 @@
 This is just a script that I've created in order to guide along users with installing both Wine, and Lutris.
 
-It begins by detecting your current distribution, and, if it's hardcoded into it (supported), executes specific commands depending on which type of distro -
-- and version that you're using.
+It begins by detecting your current distribution, and, if it's hardcoded into it (supported), executes specific commands depending on which type of distro and version that you're using.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -13,8 +12,7 @@ Once that's done, we execute the script.
 2) sudo chmod +x Wine_and_Lutris_script.sh
 3) ./Wine_and_Lutris_script.sh
 
-Once executed, it will grab your distro name as a string and compare it to existing ones in the code. If a match is found, code that matches it is executed. - 
-- If no match is found, then the code simple just exits. Well, it just defaults it saying that it's finished, even though it didn't properly execute.
+Once executed, it will grab your distro name as a string and compare it to existing ones in the code. If a match is found, code that matches it is executed. If no match is found, then the code simple just exits. Well, it just defaults it saying that it's finished, even though it didn't properly execute.
 
 
 
