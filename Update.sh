@@ -27,9 +27,3 @@ then
 	sudo pacman -Syu -y
 fi					                # This just ends the if, else if (elif), and "then" checks.
 }
-
-#{
-#printf "%s\n" "This is the end of the script."
-#}
-
-#3tjqtTvq-_REmIpj8tVUUQ
