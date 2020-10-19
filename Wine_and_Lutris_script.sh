@@ -5,11 +5,11 @@
 #Edited:	8/13/2020 at 02:28 (Changed the variable "codename" to "debian", as I was using it for Ubuntu, but it works the same as it's Debian based.)
 
 {
-debian=$(lsb_release -c)							# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros.
+ubuntu=$(lsb_release -c)							# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros.
 fedora=$(cat /etc/fedora-release)					# This does the same thing as codename, but for Fedora.
-manjaro=$(lsb_release -d)							# I lied. Apparently Manjaro has this included as well.
+arch=$(awk "NR==3" /etc/os-release)							# I lied. Apparently Manjaro has this included as well.
 linuxMint=$(awk "NR==11" /etc/os-release)			# I kept getting an error with lsb_release -c, being this: line XX: [: missing `]'. I couldn't fully figure it out, even though it's telling me DIRECTLY what it's missing, so instead I just created a workaround, which is too vague but it still works for now.
-printf "%s\n" "$debian"							# Prints out which codename it grabbed. Entirely useless, only for debugging.
+printf "%s\n" "$ubuntu"							# Prints out which codename it grabbed. Entirely useless, only for debugging.
 printf "%s\n" "$fedora"								# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
 } &> /dev/null 										# This hides the nasty "command not found..." errors for this block of code.
 
@@ -20,11 +20,11 @@ printf "This may take up to a minute or two, depending on your Internet speed, t
 }
 
 {
-if [ "$debian" == "Codename:	eoan" ];            # Lines 14, 18, 22, 26, 30, 33, and 36 just check what was printed out by the variables and continue execution. (Expanded on below)
+if [ "$ubuntu" == "Codename:	eoan" ];            # Lines 14, 18, 22, 26, 30, 33, and 36 just check what was printed out by the variables and continue execution. (Expanded on below)
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ eoan main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$debian" == "Codename:	focal" ];       #Ubuntu 20.04 LTS and Linux Mint 20.04
+elif [ "$ubuntu" == "Codename:	focal" ];       #Ubuntu 20.04 LTS and Linux Mint 20.04
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
@@ -32,15 +32,15 @@ elif [ "$linuxMint" == "VERSION_CODENAME=ulyana" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$debian" == "Codename:	bionic" ];
+elif [ "$ubuntu" == "Codename:	bionic" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$debian" == "Codename:	tricia" ] || [ "$codename" == "Codename:	tina" ] || [ "$codename" == "Codename:	tessa" ];
+elif [ "$ubuntu" == "Codename:	tricia" ] || [ "$codename" == "Codename:	tina" ] || [ "$codename" == "Codename:	tessa" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add - && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' -y && sudo add-apt-repository ppa:cybermax-dexter/sdl2-backport -y && sudo apt-get update && wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04/Release.key | sudo apt-key add -    && echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_18.04 ./" | sudo tee /etc/apt/sources.list.d/wine-obs.list && sudo apt update && sudo apt install --install-recommends winehq-stable -y
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$debian" == "Codename:	xenial" ] || [ "$codename" == "Codename:	sarah" ] || [ "$codename" == "Codename:	serena" ] || [ "$codename" == "Codename:	sonya" ] || [ "$codename" == "Codename:	sylvia" ];
+elif [ "$ubuntu" == "Codename:	xenial" ] || [ "$codename" == "Codename:	sarah" ] || [ "$codename" == "Codename:	serena" ] || [ "$codename" == "Codename:	sonya" ] || [ "$codename" == "Codename:	sylvia" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
@@ -53,7 +53,7 @@ then
 elif [ "$fedora" == "Fedora release 30 (Thirty)" ]
 then
 	sudo rpm --import https://dl.winehq.org/wine-builds/winehq.key && sudo dnf config-manager --add-repo https://dl.winehq.org/wine-builds/fedora/30/winehq.repo -y && sudo dnf install winehq-stable -y && sudo dnf install lutris -y
-elif [ "$manjaro" == "Description:	Manjaro Linux" ]
+elif [ "$arch" == "ID_LIKE=arch" ];
 then
 	sudo pacman -S wine lutris -y
 fi	# This just ends the if, else if (elif), and "then" checks. If you want to add more checks, add it before "fi". Spacing matters. Tabs were used for this.
