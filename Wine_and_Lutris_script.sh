@@ -8,8 +8,7 @@
 debian=$(lsb_release -c)							# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros.
 fedora=$(cat /etc/fedora-release)					# This does the same thing as codename, but for Fedora.
 manjaro=$(lsb_release -d)							# I lied. Apparently Manjaro has this included as well.
-linuxMint=$(awk "NR==11" /etc/os-release)			# Workaround for lsb_release -c for Linux Mint 20.04 for when it was originally released. On release, it would throw errors, but after a week they had fixed said errors. This is an outdated method to obtain the name, but still works. 
-
+linuxMint=$(awk "NR==11" /etc/os-release)			# I kept getting an error with lsb_release -c, being this: line XX: [: missing `]'. I couldn't fully figure it out, even though it's telling me DIRECTLY what it's missing, so instead I just created a workaround, which is too vague but it still works for now.
 printf "%s\n" "$debian"							# Prints out which codename it grabbed. Entirely useless, only for debugging.
 printf "%s\n" "$fedora"								# This does the same thing, but for Fedora 30 / 31; Also useless, only for debugging.
 } &> /dev/null 										# This hides the nasty "command not found..." errors for this block of code.
@@ -21,15 +20,15 @@ printf "This may take up to a minute or two, depending on your Internet speed, t
 }
 
 {
-if [ "$debian" == "Codename:	eoan" ];            # Lines 23, 27, 31, 35, 39, 43, 47, 50, 53, and 56 just check what was printed out by the variables and continue execution. (Expanded on below)
+if [ "$debian" == "Codename:	eoan" ];            # Lines 14, 18, 22, 26, 30, 33, and 36 just check what was printed out by the variables and continue execution. (Expanded on below)
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ eoan main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$debian" == "Codename:	focal" ];       # Ubuntu 20.04 LTS and Linux Mint 20.04
+elif [ "$debian" == "Codename:	focal" ];       #Ubuntu 20.04 LTS and Linux Mint 20.04
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
-elif [ "$linuxMint" == "VERSION_CODENAME=ulyana" ];	# Out of date way to obtain the codename. While this still works, lsb_release -c now works on Linux Mint 20.04 after they updated it.
+elif [ "$linuxMint" == "VERSION_CODENAME=ulyana" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
@@ -60,10 +59,6 @@ then
 fi	# This just ends the if, else if (elif), and "then" checks. If you want to add more checks, add it before "fi". Spacing matters. Tabs were used for this.
 }
 
-##{
-#clear
-#}
-
 {
 printf "The installation is now complete.\n\n" # These are all self explanatory. They just print out a message to the terminal.
 printf "If you are using Ubuntu 16.04 or Linux Mint 18.x, please ignore the GLib message if it shows up.\n\n"
@@ -75,24 +70,6 @@ printf "Now showing the current verions of Wine and Lutris installed.\n\n"
 {
 wine --version && lutris --version # This just runs (and prints out) the versions of Wine and Lutris that were installed.
 }
-
-{
-read -p "Would you like to go to the forums? (Y/N) " answer # This entire block of code reads the user input, and performs an action upon their response. This line reads what key is pressed.
-while true
-do
-  case $answer in # This is just a case for yes and no.
-   [yY]* ) xdg-open https://forums.homecomingservers.com/topic/14830-how-to-get-city-of-heroes-running-on-linux/ # xdg-open opens a file, or in this case, a website, based upon the users input.
-           echo "Have a lovely day / night!" # Self explanitory. This just "echos" a string to the terminal.
-           break;; # This breaks the [yY] section, and goes to the [nN] section if the user inputted n / N.
-
-   [nN]* ) 
-           echo "Have a lovely day / night!"
-           exit;;
-   * )     
-  esac # This is just the word case, but reversed. This ends the case-switch.
-done 
-}
-
 
 # 											This is just more in-depth information as to what it does.
 
@@ -107,4 +84,3 @@ done
 # I've added support for Manjaro as well. As long as your system is up to date with 'sudo pacman -Syu', this script should function properly.
 
 # Forum URL: https://forums.homecomingservers.com/topic/14830-how-to-get-city-of-heroes-running-on-linux/
-
