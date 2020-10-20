@@ -5,6 +5,7 @@
 #Edited:	8/13/2020 at 02:28 (Changed the variable "codename" to "debian", as I was using it for Ubuntu, but it works the same as it's Debian based.)
 
 {
+openSuse=$(awk "NR==4" /etc/os-release)
 ubuntu=$(lsb_release -c)							# Gets the codename for the distribution, and stores it into a variable called codename. This only works on Debian based distros.
 fedora=$(cat /etc/fedora-release)					# This does the same thing as codename, but for Fedora.
 arch=$(awk "NR==3" /etc/os-release)							# I lied. Apparently Manjaro has this included as well.
@@ -56,6 +57,9 @@ then
 elif [ "$arch" == "ID_LIKE=arch" ];
 then
 	sudo pacman -S wine lutris -y
+elif [ "$openSuse" == "ID_LIKE=opensuse suse" ];
+then
+	sudo zypper install -y wine lutris
 fi	# This just ends the if, else if (elif), and "then" checks. If you want to add more checks, add it before "fi". Spacing matters. Tabs were used for this.
 }
 
