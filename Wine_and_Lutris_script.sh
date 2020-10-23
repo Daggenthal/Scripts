@@ -1,5 +1,5 @@
 #!/bin/bash
-#Author:	ColdZero (Global for Homecoming: @Naudilus)
+#Author:	Daggenthal
 #Started:	3/20/2020 at 22:34	
 #Finished:	3/21/2020 at 02:09
 #Edited:	8/13/2020 at 02:28 (Changed the variable "codename" to "debian", as I was using it for Ubuntu, but it works the same as it's Debian based.)
