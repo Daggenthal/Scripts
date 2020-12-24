@@ -2,7 +2,7 @@
 #Author:	Daggenthal
 #Started:	3/20/2020 at 22:34	
 #Finished:	3/21/2020 at 02:09
-#Edited:	8/13/2020 at 02:28 (Changed the variable "codename" to "debian", as I was using it for Ubuntu, but it works the same as it's Debian based.)
+#Edited:	12/23/2020 at 19:51 (Added support for Ubuntu Groovy for Wine installation.)
 
 {
 openSuse=$(awk "NR==4" /etc/os-release)
@@ -44,6 +44,10 @@ then
 elif [ "$ubuntu" == "Codename:	xenial" ] || [ "$codename" == "Codename:	sarah" ] || [ "$codename" == "Codename:	serena" ] || [ "$codename" == "Codename:	sonya" ] || [ "$codename" == "Codename:	sylvia" ];
 then
 	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ xenial main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
+	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
+elif [ "$ubuntu" == "Codename:	groovy" ]
+then
+	sudo dpkg --add-architecture i386 && wget -nc https://dl.winehq.org/wine-builds/winehq.key && sudo apt-key add winehq.key && sudo apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ groovy main' -y && sudo apt update && sudo apt install --install-recommends winehq-stable -y && sudo apt update
 	sudo add-apt-repository ppa:lutris-team/lutris -y && sudo apt-get update && sudo apt-get install lutris -y
 elif [ "$fedora" == "Fedora release 32 (Thirty Two)" ]
 then
